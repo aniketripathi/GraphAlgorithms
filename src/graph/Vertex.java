@@ -1,34 +1,36 @@
 package graph;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
+import attributes.Data;
 
 
-public class Vertex<T> extends Node<T> {
+
+public class Vertex extends AbstractNode {
 	
-	private final List<Node<T>>	neighbors;
-	private final static int	NEIGHBOR_NODES	= 7;
+	private final List<AbstractNode> neighbors;
 	
 	
 	
-	public Vertex(T attributes) {
+	public Vertex(Data attributes) {
 		super(attributes);
-		neighbors = new ArrayList<Node<T>>(NEIGHBOR_NODES);
-	}
-	
-	
-	
-	public T getData() {
-		
-		return attributes;
+		neighbors = new LinkedList<AbstractNode>();
 	}
 	
 	
 	
 	@Override
-	public Iterator<Node<T>> getNeighbors() {
+	public Data getData() {
+		
+		return data;
+	}
+	
+	
+	
+	@Override
+	public Iterator<AbstractNode> neighborIterator() {
 		
 		return neighbors.iterator();
 	}
@@ -36,28 +38,28 @@ public class Vertex<T> extends Node<T> {
 	
 	
 	@Override
-	public boolean isNeighbor(Node<T> node) {
+	public boolean isNeighbor(AbstractNode abstractNode) {
 		
-		return neighbors.contains(node);
+		return neighbors.contains(abstractNode);
 	}
 	
 	
 	
 	@Override
-	protected void addNeighbor(Node<T> node) {
+	protected void addNeighbor(AbstractNode abstractNode) {
 		
-		if (node == null)
+		if (abstractNode == null)
 			throw new IllegalArgumentException("Null neighbor not allowed as neighbor");
 		
-		neighbors.add(node);
+		neighbors.add(abstractNode);
 	}
 	
 	
 	
 	@Override
-	protected boolean removeNeighbor(Node<T> node) {
+	protected boolean removeNeighbor(AbstractNode abstractNode) {
 		
-		return neighbors.remove(node);
+		return neighbors.remove(abstractNode);
 	}
 	
 }

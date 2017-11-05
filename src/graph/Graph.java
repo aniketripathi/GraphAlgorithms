@@ -4,36 +4,36 @@ import java.util.Iterator;
 
 
 
-public interface Graph<T> {
+public interface Graph<N extends AbstractNode, E extends Edge<N>> {
 	
-	public void addNode(Node<T> node);
-	
-	
-	
-	public void addEdge(Edge<T> edge);
+	void addNode(N node);
 	
 	
 	
-	public boolean removeEdge(Edge<T> edge);
+	void addEdge(E edge);
 	
 	
 	
-	public boolean removeNode(Node<T> node);
+	boolean removeEdge(E edge);
 	
 	
 	
-	public boolean contains(Node<T> node);
+	boolean removeNode(N node);
 	
 	
 	
-	public boolean contains(Edge<T> edge);
+	boolean contains(N node);
 	
 	
 	
-	public Iterator<Node<T>> nodesIterator();
+	boolean contains(E edge);
 	
 	
 	
-	public Iterator<Edge<T>> edgesIterator();
+	Iterator<N> nodesIterator();
+	
+	
+	
+	Iterator<E> edgesIterator();
 	
 }

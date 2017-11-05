@@ -6,17 +6,17 @@ import java.util.Set;
 
 
 
-public class UndirectedGraph<T> implements Graph<T> {
+public class UndirectedGraph<N extends AbstractNode, E extends Edge<N>> implements Graph<N, E> {
 	
-	private Set<Node<T>>		nodes;
-	private Set<Edge<T>>		edges;
+	private Set<N>				nodes;
+	private Set<E>				edges;
 	private final static int	NODES_SET_CAPACITY	= 7;
 	
 	
 	
 	public UndirectedGraph(int numberOfVertices, int numberOfEdges) {
-		nodes = new HashSet<Node<T>>(numberOfVertices);
-		edges = new HashSet<Edge<T>>(numberOfEdges);
+		nodes = new HashSet<>(numberOfVertices);
+		edges = new HashSet<>(numberOfEdges);
 	}
 	
 	
@@ -28,7 +28,7 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	@Override
-	public void addNode(Node<T> node) {
+	public void addNode(N node) {
 		
 		if (node == null)
 			throw new IllegalArgumentException("Null node not allowed in graph");
@@ -39,7 +39,7 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	@Override
-	public void addEdge(Edge<T> edge) {
+	public void addEdge(E edge) {
 		
 		if (edge == null)
 			throw new IllegalArgumentException("Null edge is not allowed in graph");
@@ -52,22 +52,15 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	
-	public void addConnectedNodes(Node<T> node1, Node<T> node2) {
-		
-		addEdge(new Edge<T>(node1, node2));
-	}
-	
-	
-	
 	@Override
-	public boolean removeNode(Node<T> node) {
+	public boolean removeNode(N node) {
 		
 		boolean successful = false;
 		if (nodes.contains(node)) {
-			Iterator<Edge<T>> iterator = edges.iterator();
+			Iterator<E> iterator = edges.iterator();
 			
 			while (iterator.hasNext()) {
-				Edge<T> edge = iterator.next();
+				E edge = iterator.next();
 				
 				if (edge.isEndNode(node))
 					removeEdge(edge);
@@ -81,10 +74,10 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	@Override
-	public boolean removeEdge(Edge<T> edge) {
+	public boolean removeEdge(E edge) {
 		
-		Node<T> startNode = edge.getStartNode();
-		Node<T> endNode = edge.getEndNode();
+		AbstractNode startNode = edge.getStartNode();
+		AbstractNode endNode = edge.getEndNode();
 		
 		startNode.removeNeighbor(endNode);
 		endNode.removeNeighbor(startNode);
@@ -94,7 +87,7 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	@Override
-	public boolean contains(Node<T> node) {
+	public boolean contains(N node) {
 		
 		return nodes.contains(node);
 	}
@@ -102,7 +95,7 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	@Override
-	public boolean contains(Edge<T> edge) {
+	public boolean contains(E edge) {
 		
 		return edges.contains(edge);
 	}
@@ -110,7 +103,7 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	@Override
-	public Iterator<Node<T>> nodesIterator() {
+	public Iterator<N> nodesIterator() {
 		
 		return nodes.iterator();
 	}
@@ -118,19 +111,19 @@ public class UndirectedGraph<T> implements Graph<T> {
 	
 	
 	@Override
-	public Iterator<Edge<T>> edgesIterator() {
+	public Iterator<E> edgesIterator() {
 		
 		return edges.iterator();
 	}
 	
 	
 	
-	public Edge<T> getEdge(Node<T> node1, Node<T> node2) {
+	public E getEdge(N node1, N node2) {
 		
-		Edge<T> edge = null;
+		E edge = null;
 		
 		if (contains(node1) && contains(node2))
-			for (Edge<T> tempEdge : edges)
+			for (E tempEdge : edges)
 			if (tempEdge.isConnectedBy(node1, node2))
 				edge = tempEdge;
 		return edge;
