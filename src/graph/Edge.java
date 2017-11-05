@@ -31,7 +31,8 @@ public class Edge<T> {
 	
 	public boolean isConnectedBy(Node<T> node1, Node<T> node2) {
 		
-		return (isEndNode(node1) && isEndNode(node2));
+		return ( (node1 == startNode && node2 == endNode) ||
+				 (node1 == endNode	 && node1 == startNode));
 	}
 	
 	
