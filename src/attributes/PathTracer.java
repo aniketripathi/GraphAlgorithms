@@ -12,7 +12,7 @@ public interface PathTracer<T> {
 	
 	
 	
-	void setParent(AbstractNode parent);
+	void setParent(T parent);
 	
 	
 	
