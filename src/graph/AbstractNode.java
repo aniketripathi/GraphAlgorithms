@@ -8,15 +8,12 @@ import attributes.Data;
 
 public abstract class AbstractNode {
 	
+	
 	protected Data data;
 	
-	
-	
-	public AbstractNode(Data data) {
+	public AbstractNode(Data data){
 		this.data = data;
 	}
-	
-	
 	
 	public abstract <N extends AbstractNode> Iterator<N> neighborIterator();
 	
@@ -31,13 +28,6 @@ public abstract class AbstractNode {
 	
 	
 	protected abstract boolean removeNeighbor(AbstractNode abstractNode);
-	
-	
-	
-	public Data getData() {
-		
-		return data;
-	}
 	
 	
 	
